@@ -6,7 +6,6 @@ const MainSwitch = (props) => {
         const target = e.target;
         $('.main-switch-element').removeClass('active');
         $(target).addClass('active');
-        console.log(target);
         props.change(tab);
     };
 
