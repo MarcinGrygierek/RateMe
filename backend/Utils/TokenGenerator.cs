@@ -27,7 +27,7 @@ namespace Rate.ME.Utils
         {
             Token token = new Token();
             token.ExpirationDate = tokenData.ExpirationStamp.ToString("yyyy-MM-dd HH:mm:ss");
-            token.TokenText = EncryptTokenHash(tokenData);
+            token.TokenData = EncryptTokenHash(tokenData);
             token.Client = tokenData.Client;
 
             return token;

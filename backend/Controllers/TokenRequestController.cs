@@ -67,7 +67,7 @@ namespace Rate.ME.Controllers
             try
             {
                 _repository.AddToken(realToken);
-                response.HashText = BitConverter.ToString(realToken.TokenText).Replace("-", "");
+                response.HashText = BitConverter.ToString(realToken.TokenData).Replace("-", "");
                 response.Status = "Ok";
             }
             catch
