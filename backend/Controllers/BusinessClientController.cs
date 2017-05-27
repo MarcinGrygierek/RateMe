@@ -7,20 +7,20 @@ using Rate.ME.Models;
 
 namespace Rate.ME.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/values")]
     public class BusinessClientController : Controller
     {
-        //private readonly RateMeDbContext _ratesDb;
+        private readonly RateMeDbContext _ratesDb;
 
         public BusinessClientController(RateMeDbContext database)
         {
-            //_ratesDb = database;
+            _ratesDb = database;
         }
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return null;//_ratesDb.BusinessClient.Select(x => x.ToString()).ToArray();
+            return _ratesDb.BusinessClient.Select(x => x.ToString()).ToArray();
         }
 
         // GET api/values/5
