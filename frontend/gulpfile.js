@@ -25,7 +25,7 @@ const autoprefixerOptions = {
 };
 
 gulp.task('sass', () => {
-    return gulp.src('src/styles/style.scss')
+    return gulp.src('src/scss/style.scss')
         .pipe(errorHandler())
         .pipe(sass.sync({outputStyle: 'expanded'}))
         .pipe(autoprefixer(autoprefixerOptions))
@@ -52,7 +52,7 @@ gulp.task('bundle', () => {
     ]
   })
   .transform(babelify.configure({
-    presets: ["es2015", "react"]
+    presets: ["es2015", "react", "stage-0"]
   }))
   .bundle()
   .pipe(fs.createWriteStream("dist/bundle.js"));
@@ -65,7 +65,7 @@ gulp.task('copy-images', () => {
 
 gulp.task('watch', ['bundle', 'sass'], () => {
     gulp.watch('src/js/**/*.js', ['bundle'])
-    gulp.watch('src/styles/**/*.scss', ['sass'])
+    gulp.watch('src/scss/**/*.scss', ['sass'])
 })
 
 gulp.task('default', ['icons', 'sass', 'copy-images', 'bundle', 'watch']);
