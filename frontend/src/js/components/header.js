@@ -18,10 +18,18 @@ export default class Header extends Component {
         console.log('constructor');
 
         if (authService.isSignedIn()) {
+            let panelLink;
+            if ('ROLE_SERVICE' === authService.getRole()) {
+                panelLink = <Link to="/providerPanel">Panel</Link>;
+            }
+            else if ('ROLE_CLIENT' === authService.getRole()) {
+                panelLink = <Link to="/clientPanel">Panel</Link>;
+            }
+
             this.state = {
                 menuElements: <ul className="nav navbar-nav">
                     <li>
-                        <Link to="/providerPanel">Panel</Link>
+                        {panelLink}
                     </li>
                     <li>
                         <a href='#' onClick={this.logout}>Wyloguj</a>
@@ -33,7 +41,7 @@ export default class Header extends Component {
             this.state = {
                 menuElements: <ul className="nav navbar-nav">
                     <li>
-                        <Link to="/providerPanel/dashboard">Panel</Link>
+                        <Link to="/clientPanel">Panel klienta</Link>
                     </li>
                     <li>
                         <Link to="/providerPanel">Panel usługodawcy</Link>
@@ -43,6 +51,8 @@ export default class Header extends Component {
         }
     }
 
+
+
     componentDidMount() {
         $(".collapse").collapse();
         $(document).on('changeState', this.handleEvent);
@@ -50,10 +60,17 @@ export default class Header extends Component {
 
     handleEvent = (event, state) => {
         if (authService.isSignedIn()) {
+            let panelLink;
+            if ('ROLE_SERVICE' === authService.getRole()) {
+                panelLink = <Link to="/providerPanel">Panel</Link>;
+            }
+            else if ('ROLE_CLIENT' === authService.getRole()) {
+                panelLink = <Link to="/clientPanel">Panel</Link>;
+            }
             this.setState({
                 menuElements: <ul className="nav navbar-nav">
                     <li>
-                        <Link to="/providerPanel">Panel</Link>
+                        {panelLink}
                     </li>
                     <li>
                         <a href='#' onClick={this.logout}>Wyloguj</a>
@@ -66,7 +83,7 @@ export default class Header extends Component {
             this.setState({
                 menuElements: <ul className="nav navbar-nav">
                     <li>
-                        <Link to="/">Panel klienta</Link>
+                        <Link to="/clientPanel">Panel klienta</Link>
                     </li>
                     <li>
                         <Link to="/providerPanel">Panel usługodawcy</Link>
