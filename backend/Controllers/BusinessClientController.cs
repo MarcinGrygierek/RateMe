@@ -10,17 +10,17 @@ namespace Rate.ME.Controllers
     [Route("api/[controller]")]
     public class BusinessClientController : Controller
     {
-        private readonly RateMeDbContext _ratesDb;
+        //private readonly RateMeDbContext _ratesDb;
 
         public BusinessClientController(RateMeDbContext database)
         {
-            _ratesDb = database;
+            //_ratesDb = database;
         }
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return _ratesDb.BusinessClient.Select(x => x.ToString()).ToArray();
+            return null;//_ratesDb.BusinessClient.Select(x => x.ToString()).ToArray();
         }
 
         // GET api/values/5

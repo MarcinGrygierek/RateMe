@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Rate.ME.Models;
+using Rate.ME.Repositories;
 
 namespace Rate.ME
 {
@@ -29,7 +30,7 @@ namespace Rate.ME
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddEntityFrameworkSqlite().AddDbContext<RateMeDbContext>();
-        
+            services.AddScoped<ITokenRepository, TokenRepository>();
             // Add framework services.
             services.AddMvc();
         }
