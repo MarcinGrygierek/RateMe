@@ -38,6 +38,18 @@ namespace Rate.ME.Repositories
             return _ratesDb.BusinessClient;
         }
 
+        public IEnumerable<BusinessClient> GetBusinessClients(Func<BusinessClient, bool> predicate)
+        {
+            try
+            {
+                return _ratesDb.BusinessClient.Where(predicate);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public void RemoveBusinessClient(BusinessClient client)
         {
             try

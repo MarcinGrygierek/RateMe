@@ -15,6 +15,8 @@ namespace Rate.ME.Models
         public string Email { get; set; }
         public string IsVerified { get; set; }
         public string Description { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
 
         public virtual ICollection<Token> Token { get; set; }
     }

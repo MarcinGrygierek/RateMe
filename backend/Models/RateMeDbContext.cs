@@ -15,7 +15,7 @@ namespace Rate.ME.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-            optionsBuilder.UseSqlite(@"Datasource=database");
+            optionsBuilder.UseSqlite(@"Datasource=/home/slawomir/RateMe/database/database");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -23,6 +23,10 @@ namespace Rate.ME.Models
             modelBuilder.Entity<BusinessClient>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Address).IsRequired();
+
+                entity.Property(e => e.City).IsRequired();
 
                 entity.Property(e => e.Email).IsRequired();
 

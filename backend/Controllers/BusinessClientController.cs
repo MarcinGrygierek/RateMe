@@ -74,7 +74,7 @@ namespace Rate.ME.Controllers
         public string Comment { get; set; }
     }
 
-    [Route("api/values")]
+    [Route("api/service")]
     public class BusinessClientController : Controller
     {
         private readonly IBusinessClientRepository _repository;
