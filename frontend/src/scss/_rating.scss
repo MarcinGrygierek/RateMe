@@ -1,0 +1,55 @@
+$activeStar: #ddd872;
+
+.rating {
+    .rating-heading {
+        &:nth-child(1) {
+            margin-top: 0;
+        }
+    }
+
+    .progress {
+        height: 25px;
+
+    }
+}
+
+.stars {
+    padding: 5px 0 10px 0;
+    .star {
+        color: $activeStar;
+        padding: 5px;
+    }
+}
+
+.rating-stars {
+    text-align: center;
+    .star {
+        cursor: pointer;
+        span {
+            color: desaturate($activeStar, 100%);
+            font-size: 4rem;
+        }
+
+        &.active {
+            span {
+                color: $activeStar;
+            }
+        }
+
+         &:hover, &.hovered {
+            span {
+                color: darken($activeStar, 20%);
+            }
+        }
+
+    }
+}
+
+.rating-comment {   
+    textarea {
+        font-size: 2rem;
+        resize: vertical;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}

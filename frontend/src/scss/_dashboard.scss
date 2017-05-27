@@ -1,0 +1,33 @@
+.tile {
+    background-color: $brand-primary;
+    text-align:center;
+    height: 200px;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid darken($brand-primary, 20%);
+    color: #fff;
+    display: block;
+
+    &:hover {
+        background-color: darken($brand-primary, 10%);
+        color: #fff;
+    }
+
+    .tile-title {
+        position: absolute;
+        margin: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.QRCode {
+    width: 100%;
+    text-align: center;
+
+    canvas {
+        max-width: 100%;
+        height: auto !important;
+    }
+}
