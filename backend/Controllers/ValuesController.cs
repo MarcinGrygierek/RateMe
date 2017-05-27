@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Rate.ME.Models;
 
 namespace Rate.ME.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private readonly RateMeDbContext _ratesDb;
+
+        public ValuesController(RateMeDbContext database)
+        {
+            _ratesDb = database;
+        }
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _ratesDb.BusinessClient.Select(x => x.ToString()).ToArray();
         }
 
         // GET api/values/5
