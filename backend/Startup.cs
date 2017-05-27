@@ -55,7 +55,7 @@ namespace Rate.ME
             loggerFactory.AddDebug();
 
             app.UseCors(builder =>
-                builder.WithOrigins("http://localhost:5000"));
+                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseMvc();
         }
