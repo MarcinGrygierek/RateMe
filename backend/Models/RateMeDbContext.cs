@@ -91,6 +91,8 @@ namespace Rate.ME.Models
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.Comment).IsRequired();
+
                 entity.Property(e => e.TokenId).HasColumnName("TokenID");
 
                 entity.HasOne(d => d.Token)

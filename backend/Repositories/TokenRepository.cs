@@ -36,5 +36,17 @@ namespace Rate.ME.Repositories
         {
             return _context.Token;
         }
+
+        public IEnumerable<Token> GetTokens(Func<Token, bool> predicate)
+        {
+            try
+            {
+                return _context.Token.Where(predicate).ToArray();
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }
