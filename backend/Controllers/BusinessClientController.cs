@@ -8,11 +8,11 @@ using Rate.ME.Models;
 namespace Rate.ME.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class BusinessClientController : Controller
     {
         private readonly RateMeDbContext _ratesDb;
 
-        public ValuesController(RateMeDbContext database)
+        public BusinessClientController(RateMeDbContext database)
         {
             _ratesDb = database;
         }
