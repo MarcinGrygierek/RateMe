@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -29,13 +31,21 @@ namespace Rate.ME
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //
             services.AddEntityFrameworkSqlite().AddDbContext<RateMeDbContext>();
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<IBusinessClientRepository, BusinessClientRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVoteRepository, VoteRepository>();
+            services.AddCors();
+
             // Add framework services.
             services.AddMvc();
+
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +53,9 @@ namespace Rate.ME
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseCors(builder =>
+                builder.WithOrigins("http://localhost:5000"));
 
             app.UseMvc();
         }
