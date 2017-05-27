@@ -44009,9 +44009,9 @@ var AddReview = function (_Component) {
 
         _this.state = {
             comment: '',
-            serviceQuality: 1,
-            satisfaction: 2,
-            ratio: 3
+            serviceQuality: null,
+            satisfaction: null,
+            ratio: null
         };
 
         // this.handleQualityChange = this.handleQualityChange.bind(this);
@@ -44032,7 +44032,9 @@ var AddReview = function (_Component) {
     }, {
         key: 'handleSave',
         value: function handleSave(e) {
-            console.log(this.state);
+            if (!this.state.serviceQuality || !this.state.satisfaction || !this.state.ratio) {
+                console.log('chyba nie');
+            } else console.log(this.state);
         }
     }, {
         key: 'render',
@@ -44180,7 +44182,7 @@ exports.default = StarsItem;
 ;
 
 },{"react":278}],284:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -44188,7 +44190,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -44210,9 +44212,15 @@ var Footer = function (_Component) {
     }
 
     _createClass(Footer, [{
-        key: 'render',
+        key: "render",
         value: function render() {
-            return _react2.default.createElement('footer', null);
+            return _react2.default.createElement(
+                "footer",
+                null,
+                "RateMe, crafted with ",
+                _react2.default.createElement("span", { className: "heart glyphicon glyphicon-heart" }),
+                " at Jazzy Hackaton"
+            );
         }
     }]);
 
@@ -44546,7 +44554,6 @@ var Main = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'col-md-6 col-md-offset-3 main-content' },
-                    _react2.default.createElement(_mainSwitch2.default, { change: this.changeTab }),
                     this.state.box,
                     _react2.default.createElement(_mainDescription2.default, null)
                 )
@@ -45532,7 +45539,7 @@ var AuthService = function () {
         key: 'providerLogin',
         value: function providerLogin(email, password) {
             if (email === 'provider@email.com' && password === 'provider') {
-                sessionStorage.setItem('token', 123456);
+                localStorage.setItem('token', 123456);
                 return true;
             }
             return false;
@@ -45540,14 +45547,14 @@ var AuthService = function () {
     }, {
         key: 'logout',
         value: function logout() {
-            sessionStorage.clear();
-            console.log(sessionStorage.getItem('token'));
+            localStorage.clear();
+            console.log(localStorage.getItem('token'));
             return true;
         }
     }, {
         key: 'isSignedIn',
         value: function isSignedIn() {
-            var token = sessionStorage.getItem('token');
+            var token = localStorage.getItem('token');
             console.log(token ? true : false);
             return token ? true : false;
         }
