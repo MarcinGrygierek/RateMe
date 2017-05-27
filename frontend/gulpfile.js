@@ -41,7 +41,7 @@ gulp.task('minify-css', ['sass'], () => {
 });
 
 gulp.task('icons', () => {
-    return gulp.src('node_modules/font-awesome/fonts/**.*')
+    return gulp.src('node_modules/bootstrap-sass/assets/fonts/bootstrap/**.*')
         .pipe(gulp.dest('dist/fonts'));
 });
 
