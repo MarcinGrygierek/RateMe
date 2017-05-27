@@ -12,6 +12,7 @@ namespace Rate.ME.Utils
 
         public TokenData(BusinessClient client, User user, DateTime stamp)
         {
+            Client = client;
             ClientID = client.Id;
             UserID = user.Id;
             //48h expiration

@@ -33,6 +33,7 @@ namespace Rate.ME
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<IBusinessClientRepository, BusinessClientRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IVoteRepository, VoteRepository>();
             // Add framework services.
             services.AddMvc();
         }

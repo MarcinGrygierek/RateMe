@@ -10,6 +10,7 @@ namespace Rate.ME.Models
         public virtual DbSet<Points> Points { get; set; }
         public virtual DbSet<Token> Token { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Vote> Vote { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -80,6 +81,22 @@ namespace Rate.ME.Models
                 entity.Property(e => e.Name).IsRequired();
 
                 entity.Property(e => e.Password).IsRequired();
+            });
+
+            modelBuilder.Entity<Vote>(entity =>
+            {
+                entity.HasIndex(e => e.TokenId)
+                    .HasName("sqlite_autoindex_Vote_2")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.TokenId).HasColumnName("TokenID");
+
+                entity.HasOne(d => d.Token)
+                    .WithOne(p => p.Vote)
+                    .HasForeignKey<Vote>(d => d.TokenId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }

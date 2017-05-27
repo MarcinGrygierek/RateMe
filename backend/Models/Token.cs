@@ -16,6 +16,7 @@ namespace Rate.ME.Models
         public string ExpirationDate { get; set; }
 
         public virtual ICollection<Points> Points { get; set; }
+        public virtual Vote Vote { get; set; }
         public virtual BusinessClient Client { get; set; }
     }
 }

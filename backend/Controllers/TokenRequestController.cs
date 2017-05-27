@@ -9,6 +9,19 @@ using Rate.ME.Utils;
 
 namespace Rate.ME.Controllers
 {
+    public class HashRequestData
+    {
+        public string UserName { get; set; }
+        public long ClientID { get; set; }
+    }
+
+    public class HashRequestResponse
+    {
+        public string HashText {get; set;}
+        public string Status {get; set;}
+    }
+
+    [Route("api/code")]
     public class TokenRequestController : Controller
     {
         private readonly ITokenRepository _repository;
@@ -24,37 +37,45 @@ namespace Rate.ME.Controllers
             _userRepository = userRepository;
         }
 
-        [Route("api/request/{userID}/{clientID}")]
-        public string Get([FromQuery]long userID, [FromQuery]long clientID)
+        [HttpPost]
+        public IActionResult GetHash([FromBody] HashRequestData data)
         {
             BusinessClient client;
             User user;
             TokenData tokenData;
             Token realToken;
 
+            HashRequestResponse response = new HashRequestResponse();
+            response.HashText = "";
+            response.Status = "Error";
+
+            if(data == null) return CreatedAtRoute(data, response);
+
             try
             {
-                user = _userRepository.GetUser(actualUser => actualUser.Id == userID);
-                client = _businessRepository.GetBusinessClient(actualClient => actualClient.Id == clientID);
+                user = _userRepository.GetUser(actualUser => actualUser.Name == data.UserName);
+                client = _businessRepository.GetBusinessClient(actualClient => actualClient.Id == data.ClientID);
                 tokenData = new TokenData(client, user, DateTime.Now);
                 TokenGenerator generator = new TokenGenerator();
                 realToken = generator.GenerateTokenForDB(tokenData);
             }
             catch
             {
-                return "";
+                return CreatedAtRoute(data, response);
             }
 
             try
             {
                 _repository.AddToken(realToken);
+                response.HashText = BitConverter.ToString(realToken.TokenText).Replace("-", "");
+                response.Status = "Ok";
             }
             catch
             {
-                return "";
+                return CreatedAtRoute(data, response);
             }
 
-            return BitConverter.ToString(realToken.TokenText).Replace("-", "");
+            return CreatedAtRoute(data, response);
         }
     }
 }
