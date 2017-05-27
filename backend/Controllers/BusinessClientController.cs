@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Rate.ME.Models;
@@ -8,16 +9,23 @@ using Rate.ME.Repositories;
 
 namespace Rate.ME.Controllers
 {
+    [DataContract]
     class BusinessClientInfo
     {
+        [DataMember]
         public long ClientID { get; private set;}
+        [DataMember]
         public string Description {get; private set;}
+        [DataMember]
         public string Name {get; private set;}
-        public int AverageProductRate {get; private set;}
-        public int AverageServiceRate {get; private set;}
-        public int AverageRatioRate {get; private set;}
-
-        public List<Vote> Votes {get; private set;}
+        [DataMember]
+        public double AverageProductRate {get; private set;}
+        [DataMember]
+        public double AverageServiceRate {get; private set;}
+        [DataMember]
+        public double AverageRatioRate {get; private set;}
+        [DataMember]
+        public List<SimplifiedVote> Votes {get; private set;}
 
         public BusinessClientInfo(BusinessClient client, IVoteRepository repository, ITokenRepository tokenRepository)
         {
@@ -27,13 +35,43 @@ namespace Rate.ME.Controllers
 
             var tokens = tokenRepository.GetTokens(x => x.ClientId == ClientID);
 
-            Votes = repository.GetVotes().ToList();
-            Votes = Votes.Where(x => tokens.Any(y => x.TokenId == y.Id)).ToList();
+            var votes = repository.GetVotes();
+            votes = votes.Where(x => tokens.Any(y => x.TokenId == y.Id));
 
-            AverageProductRate = Convert.ToInt32(Votes.Average(x => x.ProductRate));
-            AverageServiceRate = Convert.ToInt32(Votes.Average(x => x.ServiceRate));
-            AverageRatioRate = Convert.ToInt32(Votes.Average(x => x.RatioRate));
+            Votes = new List<SimplifiedVote>();
+            foreach(var element in votes)
+            {
+                SimplifiedVote vote = new SimplifiedVote();
+                vote.Id = element.Id;
+                vote.Comment = element.Comment;
+                vote.ProductRate = element.ProductRate;
+                vote.RatioRate = element.RatioRate;
+                vote.ServiceRate = element.ServiceRate;
+
+                Votes.Add(vote);
+            }
+
+            try
+            {
+                AverageProductRate = Votes.Average(x => x.ProductRate);
+                AverageServiceRate = Votes.Average(x => x.ServiceRate);
+                AverageRatioRate = Votes.Average(x => x.RatioRate);
+            }
+            catch
+            {
+
+            }
         }
+    }
+
+    public class SimplifiedVote
+    {
+        public long Id { get; set; }
+        public long TokenId { get; set; }
+        public double ProductRate { get; set; }
+        public double ServiceRate { get; set; }
+        public double RatioRate { get; set; }
+        public string Comment { get; set; }
     }
 
     [Route("api/values")]
