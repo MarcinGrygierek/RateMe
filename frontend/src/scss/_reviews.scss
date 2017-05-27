@@ -1,0 +1,16 @@
+.reviews {
+    .review {
+       padding: 20px 0;
+       // padding-bottom:
+        border-bottom: 2px solid $gray-dark;
+
+        .review-comment {
+            margin: 10px 0;
+        }
+    }
+}
+
+.service-title {
+    color: $brand-primary;
+    padding: 0 5px;
+}

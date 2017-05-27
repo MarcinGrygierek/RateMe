@@ -24,9 +24,6 @@ export default class Main extends Component {
 
 
     changeTab = (tab) => {
-        console.log(this);
-        console.log(tab);
-
         if ('search' === tab) {
             this.setState({
                 box: <SearchBox handleSearch={this.handleSearch} />
@@ -40,23 +37,19 @@ export default class Main extends Component {
     }
 
     handleSearch = (term) => {
-        console.log(this);
-        console.log(term);
         this.props.navigate();
-        //hashHistory.push('/search');
     }
 
     render() {
         return (
-           
-                <div className="row">
-                    <div className="col-md-6 col-md-offset-3 main-content">
-                        <Logo />
-                        <MainSwitch change={this.changeTab} />
-                        {this.state.box}
-                        <MainDescription />
-                    </div>
+
+            <div className="row">
+                <div className="col-md-6 col-md-offset-3 main-content">
+                    {/*<MainSwitch change={this.changeTab} />*/}
+                    {this.state.box}
+                    <MainDescription />
                 </div>
+            </div>
 
         )
     }

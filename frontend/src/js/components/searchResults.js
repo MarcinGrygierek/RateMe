@@ -20,7 +20,7 @@ const results = [
 ];
 
 
-export default class SearhResults extends Component {
+export default class SearchResults extends Component {
     constructor(props) {
         super(props);
     }
@@ -31,8 +31,20 @@ export default class SearhResults extends Component {
         });
     }
 
+   /* shuffle(a) {
+        let b = [];
+        for (let i = a.length; i; i--) {
+            let j = Math.floor(Math.random() * i);
+            [b[i - 1], b[j]] = [a[j], a[i - 1]];
+        }
+        return b;
+    }*/
+
     render() {
-        const renderedResults = results.map(r => <SearchResult key={r.id} id={r.id} title={r.title} description={r.description} />);
+     /*   const shuffled = this.shuffle(results);
+        console.log(shuffled);*/
+        let renderedResults = results.map(r => <SearchResult key={r.id} id={r.id} title={r.title} description={r.description} />);
+        
         return (
 
             <div>
