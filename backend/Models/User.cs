@@ -13,6 +13,7 @@ namespace Rate.ME.Models
         public long Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<Points> Points { get; set; }
     }

@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Rate.ME.Models;
+
 namespace Rate.ME.Utils
 {
     class TokenGenerator
     {
-        public byte[] EncryptTokenHash(Token token)
+        private byte[] EncryptTokenHash(TokenData token)
         {
             List<byte> data = new List<byte>();
             data.AddRange(BitConverter.GetBytes(token.ClientID));
@@ -19,6 +21,16 @@ namespace Rate.ME.Utils
                 hash = algorithm.ComputeHash(data.ToArray());
             }
             return hash;
+        }
+
+        public Token GenerateTokenForDB(TokenData tokenData)
+        {
+            Token token = new Token();
+            token.ExpirationDate = tokenData.ExpirationStamp.ToString("yyyy-MM-dd HH:mm:ss");
+            token.TokenText = EncryptTokenHash(tokenData);
+            token.Client = tokenData.Client;
+
+            return token;
         }
     }
 }

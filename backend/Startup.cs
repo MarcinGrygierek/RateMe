@@ -31,6 +31,8 @@ namespace Rate.ME
         {
             services.AddEntityFrameworkSqlite().AddDbContext<RateMeDbContext>();
             services.AddScoped<ITokenRepository, TokenRepository>();
+            services.AddScoped<IBusinessClientRepository, BusinessClientRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             // Add framework services.
             services.AddMvc();
         }

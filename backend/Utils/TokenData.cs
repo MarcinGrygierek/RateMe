@@ -3,13 +3,14 @@ using Rate.ME.Models;
 
 namespace Rate.ME.Utils
 {
-    class Token
+    class TokenData
     {
         public long ClientID {get; private set;}
+        public BusinessClient Client {get; private set;}
         public long UserID {get; private set;}
         public DateTime ExpirationStamp {get; private set;}
 
-        public Token(BusinessClient client, User user, DateTime stamp)
+        public TokenData(BusinessClient client, User user, DateTime stamp)
         {
             ClientID = client.Id;
             UserID = user.Id;
