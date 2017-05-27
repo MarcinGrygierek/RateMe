@@ -16,7 +16,14 @@ namespace Rate.ME.Repositories
         public void AddVote(Vote client)
         {
             _ratesDb.Vote.Add(client);
-            _ratesDb.SaveChanges();
+            try
+            {
+                _ratesDb.SaveChanges();
+            }
+            finally
+            {
+                
+            }
         }
 
         public Vote GetVote(Func<Vote, bool> predicate)
