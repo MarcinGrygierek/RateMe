@@ -45,7 +45,7 @@ export default class Main extends Component {
 
             <div className="row">
                 <div className="col-md-6 col-md-offset-3 main-content">
-                    <MainSwitch change={this.changeTab} />
+                    {/*<MainSwitch change={this.changeTab} />*/}
                     {this.state.box}
                     <MainDescription />
                 </div>
