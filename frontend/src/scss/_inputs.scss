@@ -1,0 +1,24 @@
+.main-box {
+    text-align: center;
+
+    .main-field {
+        font-size: 2rem;
+        height: 6rem;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+
+    }
+}
+
+input {
+    outline: none;
+    box-shadow: none;
+    border: none;
+
+    &:focus {
+        border: none;
+        box-shadow: none;
+    }
+}
