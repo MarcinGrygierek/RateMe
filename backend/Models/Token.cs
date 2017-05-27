@@ -12,7 +12,7 @@ namespace Rate.ME.Models
 
         public long Id { get; set; }
         public long ClientId { get; set; }
-        public byte[] TokenText { get; set; }
+        public byte[] TokenData { get; set; }
         public string ExpirationDate { get; set; }
 
         public virtual ICollection<Points> Points { get; set; }

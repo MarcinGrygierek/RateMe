@@ -9,6 +9,7 @@ namespace Rate.ME.Repositories
         void AddToken(Token client);
         //void RemoveToken(Token client);
         IEnumerable<Token> GetTokens();
+        IEnumerable<Token> GetTokens(Func<Token, bool> predicate);
         Token GetToken(Func<Token, bool> predicate);
         //void UpdateToken(Token client);
 

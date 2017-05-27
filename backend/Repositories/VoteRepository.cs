@@ -38,6 +38,18 @@ namespace Rate.ME.Repositories
             return _ratesDb.Vote;
         }
 
+        public IEnumerable<Vote> GetVotes(Func<Vote, bool> predicate)
+        {
+            try
+            {
+                return _ratesDb.Vote.Where(predicate).ToArray();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public void RemoveVote(Vote client)
         {
             try

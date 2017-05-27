@@ -52,7 +52,7 @@ namespace Rate.ME.Models
 
             modelBuilder.Entity<Token>(entity =>
             {
-                entity.HasIndex(e => e.TokenText)
+                entity.HasIndex(e => e.TokenData)
                     .HasName("sqlite_autoindex_Token_2")
                     .IsUnique();
 
@@ -64,7 +64,7 @@ namespace Rate.ME.Models
                     .IsRequired()
                     .HasColumnType("DATETIME");
 
-                entity.Property(e => e.TokenText).IsRequired();
+                entity.Property(e => e.TokenData).IsRequired();
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Token)
@@ -90,6 +90,14 @@ namespace Rate.ME.Models
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Comment).IsRequired();
+
+                entity.Property(e => e.ProductRate).HasColumnType("DOUBLE");
+
+                entity.Property(e => e.RatioRate).HasColumnType("DOUBLE");
+
+                entity.Property(e => e.ServiceRate).HasColumnType("DOUBLE");
 
                 entity.Property(e => e.TokenId).HasColumnName("TokenID");
 
