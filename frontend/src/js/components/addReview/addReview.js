@@ -13,9 +13,9 @@ export default class AddReview extends Component {
 
         this.state = {
             comment: '',
-            serviceQuality: 1,
-            satisfaction: 2,
-            ratio: 3
+            serviceQuality: null,
+            satisfaction: null,
+            ratio: null
         }
 
         // this.handleQualityChange = this.handleQualityChange.bind(this);
@@ -58,7 +58,10 @@ export default class AddReview extends Component {
     }
 
     handleSave(e) {
-        console.log(this.state);
+        if(!this.state.serviceQuality || !this.state.satisfaction || !this.state.ratio) {
+            console.log('chyba nie');
+        }
+        else console.log(this.state);
     }
 
     render() {
