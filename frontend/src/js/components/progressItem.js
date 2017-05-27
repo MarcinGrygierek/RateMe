@@ -11,8 +11,8 @@ const ProgressItem = (props) => {
             <div className="progress">
                 <div className="progress-bar" role="progressbar" aria-valuenow={props.value}
                     aria-valuemin="0" aria-valuemax="5" style={progressWidth}>
-                    <span className="sr-only">{props.value}</span>
                 </div>
+                <span className="progress-bar-value">{props.value}</span>
             </div>
         </div>
     );

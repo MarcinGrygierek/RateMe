@@ -31,28 +31,29 @@ export default class SearchResults extends Component {
         });
     }
 
-   /* shuffle(a) {
-        let b = [];
-        for (let i = a.length; i; i--) {
-            let j = Math.floor(Math.random() * i);
-            [b[i - 1], b[j]] = [a[j], a[i - 1]];
-        }
-        return b;
-    }*/
+    /* shuffle(a) {
+         let b = [];
+         for (let i = a.length; i; i--) {
+             let j = Math.floor(Math.random() * i);
+             [b[i - 1], b[j]] = [a[j], a[i - 1]];
+         }
+         return b;
+     }*/
 
     render() {
-     /*   const shuffled = this.shuffle(results);
-        console.log(shuffled);*/
+        /*   const shuffled = this.shuffle(results);
+           console.log(shuffled);*/
         let renderedResults = results.map(r => <SearchResult key={r.id} id={r.id} title={r.title} description={r.description} />);
-        
-        return (
 
-            <div>
-                <h2 className="page-title">
-                    Wyniki wyszukiwania
+        return (
+            <main className="container">
+                <div>
+                    <h2 className="page-title">
+                        Wyniki wyszukiwania
                 </h2>
-                {renderedResults}
-            </div>
+                    {renderedResults}
+                </div>
+            </main>
         );
     }
 };

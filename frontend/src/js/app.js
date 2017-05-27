@@ -19,7 +19,7 @@ import Footer from './components/footer';
 import SearchResults from './components/searchResults';
 import Service from './components/service';
 import Services from './components/services';
-import ProviderPanel from './components/providerPanel/providerPanel';
+import AdminPanel from './components/adminPanel';
 import AddReview from './components/addReview/addReview';
 
 export const restService = new RestService();
@@ -62,9 +62,9 @@ class RateMeApp extends Component {
         return (
             <div id="content">
                 <Header />
-                <main className="container">
-                    {this.props.children}
-                </main>
+
+                {this.props.children}
+
                 <Footer />
             </div>
         )
@@ -78,8 +78,11 @@ ReactDOM.render(
             <IndexRoute component={MainWrapper} />
             <Route path="search" component={SearchResults} />
             <Route path="services/:id" component={Service} />
-            <Route path="providerPanel" component={ProviderPanel}>
-                <IndexRoute component={ProviderPanel} />
+            <Route path="providerPanel" component={AdminPanel}>
+                <IndexRoute component={AdminPanel} />
+            </Route>
+            <Route path="clientPanel" component={AdminPanel}>
+                <IndexRoute component={AdminPanel} />
             </Route>
             <Route path="addReview/:id" component={AddReview} />
         </Route>
