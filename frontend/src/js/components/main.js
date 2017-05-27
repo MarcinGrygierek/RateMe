@@ -42,12 +42,13 @@ export default class Main extends Component {
 
     render() {
         return (
-
-            <div className="row">
-                <div className="col-md-6 col-md-offset-3 main-content">
-                    {/*<MainSwitch change={this.changeTab} />*/}
-                    {this.state.box}
-                    <MainDescription />
+            <div className="container centered">
+                <div className="row">
+                    <div className="col-md-6 col-md-offset-3 main-content">
+                        {/*<MainSwitch change={this.changeTab} />*/}
+                        {this.state.box}
+                        <MainDescription />
+                    </div>
                 </div>
             </div>
 

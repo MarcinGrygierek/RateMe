@@ -31,3 +31,14 @@
         height: auto !important;
     }
 }
+
+.client-summary {
+    text-align: center;
+    .points-count {
+        margin-bottom: 20px;
+        font-size: 6rem;
+        color: $brand-primary;
+        text-align: center;
+        display: block;
+    }
+}

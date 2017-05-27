@@ -59,21 +59,23 @@ const Service = () => {
 
   console.log();
   return (
-    <div>
-      <div className="col-md-12">
-        <h2>{service.title}</h2>
+    <main className="container">
+      <div className="row">
+        <div className="col-md-12">
+          <h2>{service.title}</h2>
+        </div>
+        <div className="col-md-6 service-description">
+          {service.description}
+        </div>
+        <div className="col-md-6">
+          <Stars type="overview" config={starsConfig} />
+        </div>
+        <div className="col-xs-12">
+          <hr />
+          <Reviews reviews={service.reviews} />
+        </div>
       </div>
-      <div className="col-md-6 service-description">
-        {service.description}
-      </div>
-      <div className="col-md-6">
-        <Stars type="overview" config={starsConfig} />
-      </div>
-      <div className="col-xs-12">
-        <hr />
-        <Reviews reviews={service.reviews} />
-      </div>
-    </div>
+    </main>
   );
 };
 

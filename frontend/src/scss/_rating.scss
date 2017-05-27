@@ -16,6 +16,7 @@ $activeStar: #ddd872;
 .stars {
     padding: 5px 0 10px 0;
     .star {
+        font-size: 2rem;
         color: $activeStar;
         padding: 5px;
     }
@@ -51,5 +52,20 @@ $activeStar: #ddd872;
         resize: vertical;
         width: 100%;
         margin-bottom: 20px;
+    }
+}
+
+.progress {
+    .progress-bar-value {
+        position:absolute;
+        text-align: center;
+        font-size: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        font-weight: 700;
+        padding: 0 10px;
+        background-color: rgba($gray-darker, 0.2);
+        height: 25px;
+        width: 50px;
     }
 }

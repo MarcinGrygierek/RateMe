@@ -1,10 +1,21 @@
 export default class AuthService {
-    providerLogin(email, password) {
-        if(email === 'provider@email.com' && password === 'provider') {
-            localStorage.setItem('token', 123456);
-            return true;
+    login(email, password) {
+        let ok = false;
+        if (email === 'p' && password === 'p') {
+            localStorage.setItem('role', 'ROLE_SERVICE');
+            ok = true;
         }
-        return false;
+        else if (email === 'c' && password === 'c') {
+            localStorage.setItem('role', 'ROLE_CLIENT');
+            ok = true;
+        }
+
+        if (ok) {
+            localStorage.setItem('token', 123456);
+            localStorage.setItem('email', email);
+        }
+
+        return ok;
     }
 
     logout() {
@@ -17,5 +28,13 @@ export default class AuthService {
         const token = localStorage.getItem('token');
         console.log(token ? true : false);
         return token ? true : false;
+    }
+
+    getRole() {
+        return localStorage.getItem('role');
+    }
+
+    getEmail() {
+        return localStorage.getItem('email');
     }
 }
