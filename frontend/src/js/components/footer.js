@@ -8,6 +8,7 @@ export default class Footer extends Component {
     render () {
         return (
             <footer>
+                RateMe, crafted with <span className="heart glyphicon glyphicon-heart"></span> at Jazzy Hackaton
             </footer>
         )
     }
