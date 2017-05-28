@@ -40,13 +40,13 @@ namespace Rate.ME
             services.AddScoped<IPointsRepository, PointsRepository>();
             services.AddCors();
 
+            // Add framework services.
+            services.AddMvc();
+
             services.Configure<MvcOptions>(options =>
             {
                 options.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
             });
-
-            // Add framework services.
-            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +57,7 @@ namespace Rate.ME
 
             app.UseCors(builder =>
                 builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseMvc();
         }
