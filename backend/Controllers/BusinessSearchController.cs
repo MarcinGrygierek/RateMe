@@ -35,7 +35,7 @@ namespace Rate.ME.Controllers
 
             try
             {
-                clients = _repository.GetBusinessClients(x => x.Name.Contains(text)).ToArray();
+                clients = _repository.GetBusinessClients(x => x.Name.ToLower().Contains(text.ToLower())).ToArray();
             }
             catch
             {
