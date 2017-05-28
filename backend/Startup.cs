@@ -38,7 +38,6 @@ namespace Rate.ME
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVoteRepository, VoteRepository>();
             services.AddScoped<IPointsRepository, PointsRepository>();
-            services.AddCors();
 
             // Add framework services.
             services.AddMvc();
@@ -56,7 +55,7 @@ namespace Rate.ME
             loggerFactory.AddDebug();
 
             app.UseCors(builder =>
-                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
             app.UseCors("AllowSpecificOrigin");
 
             app.UseMvc();
