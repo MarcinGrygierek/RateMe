@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default class RestService {
     constructor() {
-        this.backendURL = "http://localhost:5000/api"
+        this.backendURL = "http://ratemeapi.azurewebsites.net/api";
     }
     getService(id) {
         return axios.get(this.backendURL + '/service/' + id);
@@ -12,11 +12,15 @@ export default class RestService {
         return axios.get(this.backendURL + '/search/' + name);
     }
 
-    generateCode(name, id) {
+    generateCode(userId, clientId) {
         return axios.post(this.backendURL + '/code/', {
-            'clientID': id,
-            'userName': name
+            'clientID': clientId,
+            'userId': userId
         })
+    }
+
+    getServiceByToken(token) {
+        return axios.get(this.backendURL + '/info/' + token);
     }
 
     use() {

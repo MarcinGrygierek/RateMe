@@ -14,30 +14,76 @@ export default class Service extends Component {
   }
 
   componentDidMount() {
-    restService.getService(this.props.routeParams.id).then((response) => {
-      console.log('data', response.data);
+    if (restService.use()) {
+      restService.getService(this.props.routeParams.id).then((response) => {
+        console.log('data', response.data);
+        this.setState({
+          loading: false,
+          service: response.data,
+          starsConfig: [
+            {
+              id: 1,
+              title: "Jakość usługi",
+              value: response.data.averageProductRate
+            },
+            {
+              id: 2,
+              title: "Jakość obsługi",
+              value: response.data.averageServiceRate
+            },
+            {
+              id: 3,
+              title: "Stosunek jakość/cena",
+              value: response.data.averageRatioRate
+            }
+          ]
+        })
+      })
+    }
+    else {
       this.setState({
         loading: false,
-        service: response.data,
+        service: {
+          'clientID': 108,
+          'description': "Najlepsze gry planszowe i powieści fantasy",
+          'name': "Mordor",
+          'averageProductRate': 5,
+          'averageRatioRate': 3,
+          'averageServiceRate': 3,
+          votes: [{
+            'comment': "Pierwszy dystrybutor ulubionej gry planszowej w Polsce! Niemiły nowy kasjer",
+            'id': 15,
+            'productRate': 4,
+            'ratioRate': 3,
+            'serviceRate': 2,
+          },
+          {
+            'comment': "Pierwszy dystrybutor w Polsce nowej części ulubionej serii fantasy",
+            'id': 16,
+            'productRate': 5,
+            'ratioRate': 5,
+            'serviceRate': 4,
+          }]
+        },
         starsConfig: [
           {
             id: 1,
             title: "Jakość usługi",
-            value: response.data.averageProductRate
+            value: 3
           },
           {
             id: 2,
             title: "Jakość obsługi",
-            value: response.data.averageServiceRate
+            value: 4
           },
           {
             id: 3,
             title: "Stosunek jakość/cena",
-            value: response.data.averageRatioRate
+            value: 5
           }
         ]
       })
-    })
+    }
     console.log('state', this.state);
   }
   render() {

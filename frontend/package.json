@@ -26,6 +26,8 @@
     "babel-preset-stage-0": "^6.24.1",
     "babelify": "^7.3.0",
     "browserify": "^14.3.0",
+    "bundle-collapser": "^1.2.1",
+    "envify": "^4.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-clean-css": "^3.4.0",
@@ -35,7 +37,9 @@
     "gulp-sass": "^3.1.0",
     "gulp-shorthand": "^1.1.0",
     "gulp-sourcemaps": "^2.6.0",
-    "gulp-uglify": "^3.0.0"
+    "gulp-uglify": "^3.0.0",
+    "uglify-js": "^3.0.12",
+    "uglifyify": "^3.0.4"
   },
   "dependencies": {
     "babel": "^6.23.0",

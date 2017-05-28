@@ -1,14 +1,14 @@
 export default class AuthService {
     login(email, password) {
         let ok = false;
-        if (email === 'p' && password === 'p') {
+        if (email === 'ork@mordor.pl' && password === 'aaa') {
             localStorage.setItem('role', 'ROLE_SERVICE');
-            localStorage.setItem('id', 14);
+            localStorage.setItem('id', 108);
             ok = true;
         }
-        else if (email === 'c' && password === 'c') {
+        else if (email === 'orel.jan@gmail.com' && password === 'aaa') {
             localStorage.setItem('role', 'ROLE_CLIENT');
-            localStorage.setItem('id', 2);
+            localStorage.setItem('id', 4);
             ok = true;
         }
 

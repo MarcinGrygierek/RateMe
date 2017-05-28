@@ -14,8 +14,8 @@ const uglify = require('gulp-uglify');
 const babelify = require('babelify');
 const browserify = require('browserify');
 
-const errorHandler = function() {
-    return gplumber(function(error) {
+const errorHandler = function () {
+    return gplumber(function (error) {
         console.log(error.message);
     })
 };
@@ -27,7 +27,7 @@ const autoprefixerOptions = {
 gulp.task('sass', () => {
     return gulp.src('src/scss/style.scss')
         .pipe(errorHandler())
-        .pipe(sass.sync({outputStyle: 'expanded'}))
+        .pipe(sass.sync({ outputStyle: 'expanded' }))
         .pipe(autoprefixer(autoprefixerOptions))
         .pipe(cssShorthand())
         .pipe(gcmq())
@@ -47,20 +47,20 @@ gulp.task('icons', () => {
 
 gulp.task('bundle', () => {
     return browserify({
-    entries: [
-      'src/js/app.js'
-    ]
-  })
-  .transform(babelify.configure({
-    presets: ["es2015", "react", "stage-0"]
-  }))
-  .bundle()
-  .pipe(fs.createWriteStream("dist/bundle.js"));
+        entries: [
+            'src/js/app.js'
+        ]
+    })
+        .transform(babelify.configure({
+            presets: ["es2015", "react", "stage-0"]
+        }))
+        .bundle()
+        .pipe(fs.createWriteStream("dist/bundle.js"));
 })
 
 gulp.task('bundle-min', ['bundle'], () => {
-     return gulp.src('dist/bundle.js')
-        .pipe(uglify())
+    return gulp.src('dist/bundle.js')
+        .pipe(uglify({ output: { ascii_only: true } }))
         .pipe(gulp.dest('dist'))
 })
 
