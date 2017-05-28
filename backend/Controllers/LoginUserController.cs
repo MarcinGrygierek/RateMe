@@ -22,22 +22,63 @@ namespace Rate.ME.Controllers
         public string Status { get; set;}
     }
 
-    [Route("api/login")]
     public class LoginUserController : Controller
     {
         private IUserRepository _repository;
-        public LoginUserController(IUserRepository repository)
+        private IBusinessClientRepository _businessRepository;
+        public LoginUserController(IUserRepository repository,
+        IBusinessClientRepository businessRepository)
         {
+            _businessRepository = businessRepository;
             _repository = repository;
         }
+
+        [Route("api/login")]
         [HttpPost]
-        public IActionResult Vote([FromBody] LoginRequest loginAttempt)
+        public IActionResult Login([FromBody] LoginRequest loginAttempt)
         {
             User user;
 
             try
             {
                 user = _repository.GetUser(x => x.Name == loginAttempt.Name);
+            }
+            catch
+            {
+                return CreatedAtRoute(new { gettedId = loginAttempt.Name }, new { status = "Login failed"});
+            }
+
+            try
+            {
+                if(user.Password == loginAttempt.Password)
+                {
+                    LoginSuccesfullResponse response = new LoginSuccesfullResponse();
+                    response.UserID = user.Id;
+                    response.Token = DateTime.Now.Ticks;
+                    response.Status = "Ok";
+
+                    return CreatedAtRoute(new { gettedId = loginAttempt.Name }, response);
+                }
+                else
+                {
+                    return CreatedAtRoute(new { gettedId = loginAttempt.Name }, new { status = "Bad password"});
+                }
+            }
+            catch
+            {
+                return CreatedAtRoute(new { gettedId = loginAttempt.Name }, new { status = "Login failed"});
+            }
+        }
+
+        [Route("api/login/service")]
+        [HttpPost]
+        public IActionResult LoginBusiness([FromBody] LoginRequest loginAttempt)
+        {
+            BusinessClient user;
+
+            try
+            {
+                user = _businessRepository.GetBusinessClient(x => x.Name == loginAttempt.Name);
             }
             catch
             {

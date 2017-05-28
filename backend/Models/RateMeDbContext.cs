@@ -35,6 +35,8 @@ namespace Rate.ME.Models
                     .HasColumnType("BOOLEAN");
 
                 entity.Property(e => e.Name).IsRequired();
+
+                entity.Property(e => e.Password).IsRequired();
             });
 
             modelBuilder.Entity<Points>(entity =>
