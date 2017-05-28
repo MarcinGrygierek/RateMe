@@ -118,7 +118,7 @@ export default class Header extends Component {
                             </button>
 
                             <Link to="/" className="navbar-brand">
-                                <img className="site-logo site-logo-main" src="images/logo.png" alt="RateMe" />
+                                <img className="site-logo site-logo-main" src="dist/images/logo.png" alt="RateMe" />
                             </Link>
 
                         </div>
