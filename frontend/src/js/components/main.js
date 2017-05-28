@@ -4,7 +4,6 @@ import SearchBox from './searchBox';
 import TokenBox from './tokenBox';
 import MainDescription from './mainDescription';
 import MainSwitch from './mainSwitch';
-import Logo from './logo';
 
 import {
     Router,
