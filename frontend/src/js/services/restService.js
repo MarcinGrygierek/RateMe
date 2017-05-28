@@ -11,4 +11,15 @@ export default class RestService {
     getServices(name) {
         return axios.get(this.backendURL + '/search/' + name);
     }
+
+    generateCode(name, id) {
+        return axios.post(this.backendURL + '/code/', {
+            'clientID': id,
+            'userName': name
+        })
+    }
+
+    use() {
+        return true
+    }
 }
