@@ -12,7 +12,7 @@ namespace Rate.ME.Controllers
 {
     public class HashRequestData
     {
-        public string UserName { get; set; }
+        public long UserID { get; set; }
         public long ClientID { get; set; }
     }
 
@@ -55,7 +55,7 @@ namespace Rate.ME.Controllers
 
             try
             {
-                user = _userRepository.GetUser(actualUser => actualUser.Name == data.UserName);
+                user = _userRepository.GetUser(actualUser => actualUser.Id == data.UserID);
                 client = _businessRepository.GetBusinessClient(actualClient => actualClient.Id == data.ClientID);
                 tokenData = new TokenData(client, user, DateTime.Now);
                 TokenGenerator generator = new TokenGenerator();
