@@ -43847,9 +43847,9 @@ var _services = require('./components/services');
 
 var _services2 = _interopRequireDefault(_services);
 
-var _providerPanel = require('./components/providerPanel/providerPanel');
+var _adminPanel = require('./components/adminPanel');
 
-var _providerPanel2 = _interopRequireDefault(_providerPanel);
+var _adminPanel2 = _interopRequireDefault(_adminPanel);
 
 var _addReview = require('./components/addReview/addReview');
 
@@ -43866,8 +43866,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var restService = exports.restService = new _restService2.default();
 var authService = exports.authService = new _authService2.default();
 
-var navigate = function navigate() {
-    _reactRouter.hashHistory.push('/search');
+var navigate = function navigate(term) {
+    _reactRouter.hashHistory.push('/search/' + term);
 };
 
 var MainWrapper = function MainWrapper() {
@@ -43911,11 +43911,7 @@ var RateMeApp = function (_Component) {
                 'div',
                 { id: 'content' },
                 _react2.default.createElement(_header2.default, null),
-                _react2.default.createElement(
-                    'main',
-                    { className: 'container' },
-                    this.props.children
-                ),
+                this.props.children,
                 _react2.default.createElement(_footer2.default, null)
             );
         }
@@ -43931,18 +43927,23 @@ _reactDom2.default.render(_react2.default.createElement(
         _reactRouter.Route,
         { path: '/', component: RateMeApp },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: MainWrapper }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'search', component: _searchResults2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'search/:term', component: _searchResults2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'services/:id', component: _service2.default }),
         _react2.default.createElement(
             _reactRouter.Route,
-            { path: 'providerPanel', component: _providerPanel2.default },
-            _react2.default.createElement(_reactRouter.IndexRoute, { component: _providerPanel2.default })
+            { path: 'providerPanel', component: _adminPanel2.default },
+            _react2.default.createElement(_reactRouter.IndexRoute, { component: _adminPanel2.default })
+        ),
+        _react2.default.createElement(
+            _reactRouter.Route,
+            { path: 'clientPanel', component: _adminPanel2.default },
+            _react2.default.createElement(_reactRouter.IndexRoute, { component: _adminPanel2.default })
         ),
         _react2.default.createElement(_reactRouter.Route, { path: 'addReview/:id', component: _addReview2.default })
     )
 ), document.getElementById('app'));
 
-},{"./components/addReview/addReview":282,"./components/footer":284,"./components/header":285,"./components/main":287,"./components/providerPanel/providerPanel":294,"./components/searchResults":299,"./components/service":300,"./components/services":301,"./services/authService":305,"./services/restService":306,"jquery":57,"react":278,"react-dom":77,"react-router":229}],282:[function(require,module,exports){
+},{"./components/addReview/addReview":282,"./components/adminPanel":284,"./components/footer":286,"./components/header":287,"./components/main":288,"./components/searchResults":299,"./components/service":300,"./components/services":301,"./services/authService":305,"./services/restService":306,"jquery":57,"react":278,"react-dom":77,"react-router":229}],282:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43968,9 +43969,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var service = {
-    id: 12,
-    title: 'Warsztat u Ani',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean velit urna, condimentum ut cursus sed, aliquam at tellus. Nulla consequat lectus ut neque condimentum eleifend. Mauris tincidunt augue ac nulla aliquam, ut tincidunt est suscipit. Donec enim turpis, dapibus vitae viverra a, pharetra eget ligula.'
+    id: 108,
+    title: 'Mordor',
+    description: 'Najlepsze gry planszowe i powieści fantasy'
 };
 
 var AddReview = function (_Component) {
@@ -44182,6 +44183,240 @@ exports.default = StarsItem;
 ;
 
 },{"react":278}],284:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _app = require('../app');
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _providerDashboard = require('./providerPanel/providerDashboard');
+
+var _providerDashboard2 = _interopRequireDefault(_providerDashboard);
+
+var _clientDashboard = require('./clientPanel/clientDashboard');
+
+var _clientDashboard2 = _interopRequireDefault(_clientDashboard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AdminPanel = function (_Component) {
+    _inherits(AdminPanel, _Component);
+
+    function AdminPanel(props) {
+        _classCallCheck(this, AdminPanel);
+
+        var signed = _app.authService.isSignedIn();
+        var component = null;
+        if (signed) {
+            if ("ROLE_SERVICE" === _app.authService.getRole()) component = _react2.default.createElement(_providerDashboard2.default, null);else if ("ROLE_CLIENT" === _app.authService.getRole()) component = _react2.default.createElement(_clientDashboard2.default, null);
+        }
+
+        var _this = _possibleConstructorReturn(this, (AdminPanel.__proto__ || Object.getPrototypeOf(AdminPanel)).call(this, props));
+
+        _initialiseProps.call(_this);
+
+        _this.state = {
+            login: '',
+            password: '',
+            signed: _app.authService.isSignedIn(),
+            component: component
+        };
+        return _this;
+    }
+
+    _createClass(AdminPanel, [{
+        key: 'handleLoginChange',
+        value: function handleLoginChange(e) {
+            this.setState({
+                login: e.target.value
+            });
+        }
+    }, {
+        key: 'handlePasswordChange',
+        value: function handlePasswordChange(e) {
+            this.setState({
+                password: e.target.value
+            });
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            (0, _jquery2.default)(document).on('changeState', this.handleEvent);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            (0, _jquery2.default)(document).off('changeState', this.handleEvent);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var isSigned = this.state.signed;
+            console.log(this.state.component);
+            return _react2.default.createElement(
+                'main',
+                { className: 'container centered' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-6 col-md-offset-3 main-content' },
+                        isSigned ? this.state.component : _react2.default.createElement(
+                            'div',
+                            null,
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'form-group main-box login-box' },
+                                _react2.default.createElement('input', { type: 'email',
+                                    onChange: function onChange(e) {
+                                        return _this2.handleLoginChange(e);
+                                    },
+                                    className: 'form-control main-field', placeholder: 'Email...',
+                                    value: this.state.login
+                                }),
+                                _react2.default.createElement('input', { type: 'password',
+                                    onChange: function onChange(e) {
+                                        return _this2.handlePasswordChange(e);
+                                    },
+                                    className: 'form-control main-field', placeholder: 'Has\u0142o...',
+                                    value: this.state.password
+                                }),
+                                _react2.default.createElement(
+                                    'button',
+                                    { onClick: this.handleLogin,
+                                        className: 'btn btn-lg btn-primary' },
+                                    'Zaloguj si\u0119'
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return AdminPanel;
+}(_react.Component);
+
+var _initialiseProps = function _initialiseProps() {
+    var _this3 = this;
+
+    this.handleLogin = function () {
+        if (_app.authService.login(_this3.state.login, _this3.state.password)) {
+            (0, _jquery2.default)(document).trigger("changeState", [true]);
+        };
+    };
+
+    this.handleEvent = function (event, state) {
+        if (state) {
+            var component = null;
+            if ("ROLE_SERVICE" === _app.authService.getRole()) component = _react2.default.createElement(_providerDashboard2.default, null);else if ("ROLE_CLIENT" === _app.authService.getRole()) component = _react2.default.createElement(_clientDashboard2.default, null);
+            console.log(component);
+            _this3.setState({
+                signed: state,
+                component: component
+            });
+        } else {
+            _this3.setState({
+                signed: state,
+                component: null
+            });
+        }
+    };
+};
+
+exports.default = AdminPanel;
+
+},{"../app":281,"./clientPanel/clientDashboard":285,"./providerPanel/providerDashboard":293,"jquery":57,"react":278}],285:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _app = require('../../app');
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ClientDashboard = function (_Component) {
+    _inherits(ClientDashboard, _Component);
+
+    function ClientDashboard(props) {
+        _classCallCheck(this, ClientDashboard);
+
+        return _possibleConstructorReturn(this, (ClientDashboard.__proto__ || Object.getPrototypeOf(ClientDashboard)).call(this, props));
+    }
+
+    _createClass(ClientDashboard, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'client-summary' },
+                _react2.default.createElement(
+                    'h2',
+                    null,
+                    'Witaj, ',
+                    _app.authService.getEmail()
+                ),
+                _react2.default.createElement(
+                    'h3',
+                    null,
+                    'Liczba zgromadzonych punkt\xF3w:'
+                ),
+                _react2.default.createElement(
+                    'span',
+                    { className: 'points-count' },
+                    '10'
+                ),
+                'Oceniaj regularnie aby zdoby\u0107 kolejne punkty, kt\xF3re mo\u017Cesz p\xF3\u017Aniej wymieni\u0107 na rabaty u naszych partner\xF3w.'
+            );
+        }
+    }]);
+
+    return ClientDashboard;
+}(_react.Component);
+
+exports.default = ClientDashboard;
+
+},{"../../app":281,"jquery":57,"react":278}],286:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -44229,7 +44464,7 @@ var Footer = function (_Component) {
 
 exports.default = Footer;
 
-},{"react":278}],285:[function(require,module,exports){
+},{"react":278}],287:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -44273,6 +44508,20 @@ var Header = function (_Component) {
 
         _this.handleEvent = function (event, state) {
             if (_app.authService.isSignedIn()) {
+                var panelLink = void 0;
+                if ('ROLE_SERVICE' === _app.authService.getRole()) {
+                    panelLink = _react2.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/providerPanel' },
+                        'Panel'
+                    );
+                } else if ('ROLE_CLIENT' === _app.authService.getRole()) {
+                    panelLink = _react2.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/clientPanel' },
+                        'Panel'
+                    );
+                }
                 _this.setState({
                     menuElements: _react2.default.createElement(
                         'ul',
@@ -44280,11 +44529,7 @@ var Header = function (_Component) {
                         _react2.default.createElement(
                             'li',
                             null,
-                            _react2.default.createElement(
-                                _reactRouter.Link,
-                                { to: '/providerPanel' },
-                                'Panel'
-                            )
+                            panelLink
                         ),
                         _react2.default.createElement(
                             'li',
@@ -44307,7 +44552,7 @@ var Header = function (_Component) {
                             null,
                             _react2.default.createElement(
                                 _reactRouter.Link,
-                                { to: '/' },
+                                { to: '/clientPanel' },
                                 'Panel klienta'
                             )
                         ),
@@ -44334,6 +44579,21 @@ var Header = function (_Component) {
         console.log('constructor');
 
         if (_app.authService.isSignedIn()) {
+            var panelLink = void 0;
+            if ('ROLE_SERVICE' === _app.authService.getRole()) {
+                panelLink = _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/providerPanel' },
+                    'Panel'
+                );
+            } else if ('ROLE_CLIENT' === _app.authService.getRole()) {
+                panelLink = _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/clientPanel' },
+                    'Panel'
+                );
+            }
+
             _this.state = {
                 menuElements: _react2.default.createElement(
                     'ul',
@@ -44341,11 +44601,7 @@ var Header = function (_Component) {
                     _react2.default.createElement(
                         'li',
                         null,
-                        _react2.default.createElement(
-                            _reactRouter.Link,
-                            { to: '/providerPanel' },
-                            'Panel'
-                        )
+                        panelLink
                     ),
                     _react2.default.createElement(
                         'li',
@@ -44368,8 +44624,8 @@ var Header = function (_Component) {
                         null,
                         _react2.default.createElement(
                             _reactRouter.Link,
-                            { to: '/providerPanel/dashboard' },
-                            'Panel'
+                            { to: '/clientPanel' },
+                            'Panel klienta'
                         )
                     ),
                     _react2.default.createElement(
@@ -44429,7 +44685,7 @@ var Header = function (_Component) {
                             _react2.default.createElement(
                                 _reactRouter.Link,
                                 { to: '/', className: 'navbar-brand' },
-                                _react2.default.createElement('img', { className: 'site-logo site-logo-main', src: 'images/logo.png', alt: 'RateMe' })
+                                _react2.default.createElement('img', { className: 'site-logo site-logo-main', src: 'dist/images/logo.png', alt: 'RateMe' })
                             )
                         ),
                         _react2.default.createElement(
@@ -44448,30 +44704,7 @@ var Header = function (_Component) {
 
 exports.default = Header;
 
-},{"../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap":27,"../app":281,"bootstrap-sass":27,"jquery":57,"react":278,"react-router":229}],286:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = require("react");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Logo = function Logo() {
-    return _react2.default.createElement(
-        "div",
-        { className: "main-logo" },
-        _react2.default.createElement("img", { src: "images/logo.png" })
-    );
-};
-
-exports.default = Logo;
-
-},{"react":278}],287:[function(require,module,exports){
+},{"../../../node_modules/bootstrap-sass/assets/javascripts/bootstrap":27,"../app":281,"bootstrap-sass":27,"jquery":57,"react":278,"react-router":229}],288:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -44499,10 +44732,6 @@ var _mainDescription2 = _interopRequireDefault(_mainDescription);
 var _mainSwitch = require('./mainSwitch');
 
 var _mainSwitch2 = _interopRequireDefault(_mainSwitch);
-
-var _logo = require('./logo');
-
-var _logo2 = _interopRequireDefault(_logo);
 
 var _reactRouter = require('react-router');
 
@@ -44535,7 +44764,7 @@ var Main = function (_Component) {
         };
 
         _this.handleSearch = function (term) {
-            _this.props.navigate();
+            _this.props.navigate(term);
         };
 
         _this.state = {
@@ -44550,12 +44779,16 @@ var Main = function (_Component) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                { className: 'row' },
+                { className: 'container centered' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'col-md-6 col-md-offset-3 main-content' },
-                    this.state.box,
-                    _react2.default.createElement(_mainDescription2.default, null)
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-6 col-md-offset-3 main-content' },
+                        this.state.box,
+                        _react2.default.createElement(_mainDescription2.default, null)
+                    )
                 )
             );
         }
@@ -44566,7 +44799,7 @@ var Main = function (_Component) {
 
 exports.default = Main;
 
-},{"./logo":286,"./mainDescription":288,"./mainSwitch":289,"./searchBox":297,"./tokenBox":304,"react":278,"react-router":229}],288:[function(require,module,exports){
+},{"./mainDescription":289,"./mainSwitch":290,"./searchBox":297,"./tokenBox":304,"react":278,"react-router":229}],289:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -44589,7 +44822,7 @@ var MainDescription = function MainDescription() {
 
 exports.default = MainDescription;
 
-},{"react":278}],289:[function(require,module,exports){
+},{"react":278}],290:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -44644,7 +44877,7 @@ var MainSwitch = function MainSwitch(props) {
 
 exports.default = MainSwitch;
 
-},{"jquery":57,"react":278}],290:[function(require,module,exports){
+},{"jquery":57,"react":278}],291:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -44673,15 +44906,12 @@ var ProgressItem = function ProgressItem(props) {
         _react2.default.createElement(
             "div",
             { className: "progress" },
+            _react2.default.createElement("div", { className: "progress-bar", role: "progressbar", "aria-valuenow": props.value,
+                "aria-valuemin": "0", "aria-valuemax": "5", style: progressWidth }),
             _react2.default.createElement(
-                "div",
-                { className: "progress-bar", role: "progressbar", "aria-valuenow": props.value,
-                    "aria-valuemin": "0", "aria-valuemax": "5", style: progressWidth },
-                _react2.default.createElement(
-                    "span",
-                    { className: "sr-only" },
-                    props.value
-                )
+                "span",
+                { className: "progress-bar-value" },
+                props.value
             )
         )
     );
@@ -44689,12 +44919,14 @@ var ProgressItem = function ProgressItem(props) {
 
 exports.default = ProgressItem;
 
-},{"react":278}],291:[function(require,module,exports){
+},{"react":278}],292:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
 
@@ -44704,19 +44936,97 @@ var _qrcode = require('qrcode.react');
 
 var _qrcode2 = _interopRequireDefault(_qrcode);
 
+var _app = require('../../app');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var GeneratedCode = function GeneratedCode(props) {
-    return _react2.default.createElement(
-        'section',
-        { className: 'QRCode' },
-        _react2.default.createElement(_qrcode2.default, { size: '512', value: 'http://facebook.github.io/react/' })
-    );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-exports.default = GeneratedCode;
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-},{"qrcode.react":75,"react":278}],292:[function(require,module,exports){
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CodeGenerator = function (_Component) {
+    _inherits(CodeGenerator, _Component);
+
+    function CodeGenerator(props) {
+        _classCallCheck(this, CodeGenerator);
+
+        var _this = _possibleConstructorReturn(this, (CodeGenerator.__proto__ || Object.getPrototypeOf(CodeGenerator)).call(this, props));
+
+        _this.handleChange = function (e) {
+            _this.setState({
+                name: e.target.value
+            });
+        };
+
+        _this.handleSave = function (e) {
+            console.log(_this.state.name, _this.props.token);
+            if (_app.restService.use()) {
+                _app.restService.generateCode(_this.state.name, _app.authService.getId()).then(function (response) {
+                    if ('OK' === reponse.data.status) {
+                        _this.setState({
+                            ready: true,
+                            token: 'http://showcase.itdotfocus.com/rateme/addReview/' + $response.data.hashText
+                        });
+                    }
+                });
+            } else {
+                _this.setState({
+                    ready: true,
+                    token: 'http://showcase.itdotfocus.com/rateme/addReview/ASDASDASDASASDASDASDASDASADASASDASAS'
+                });
+            }
+        };
+
+        _this.state = {
+            name: '',
+            ready: false
+        };
+        return _this;
+    }
+
+    _createClass(CodeGenerator, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var ready = this.state.ready;
+            return _react2.default.createElement(
+                'div',
+                null,
+                ready ? _react2.default.createElement(
+                    'section',
+                    { className: 'QRCode' },
+                    _react2.default.createElement(_qrcode2.default, { size: '512', value: this.state.token })
+                ) : _react2.default.createElement(
+                    'div',
+                    { className: 'form-group main-box search-box' },
+                    _react2.default.createElement('input', { type: 'text',
+                        onChange: function onChange(e) {
+                            return _this2.handleChange(e);
+                        },
+                        className: 'form-control main-field', placeholder: 'Podaj sw\xF3j login...',
+                        value: this.state.name
+                    }),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.handleSave,
+                            className: 'btn btn-lg btn-primary' },
+                        'Wy\u015Blij'
+                    )
+                )
+            );
+        }
+    }]);
+
+    return CodeGenerator;
+}(_react.Component);
+
+exports.default = CodeGenerator;
+;
+
+},{"../../app":281,"qrcode.react":75,"react":278}],293:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -44739,9 +45049,9 @@ var _providerDashboardTiles = require('./providerDashboardTiles');
 
 var _providerDashboardTiles2 = _interopRequireDefault(_providerDashboardTiles);
 
-var _generatedCode = require('./generatedCode');
+var _codeGenerator = require('./codeGenerator');
 
-var _generatedCode2 = _interopRequireDefault(_generatedCode);
+var _codeGenerator2 = _interopRequireDefault(_codeGenerator);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44759,16 +45069,9 @@ var ProviderDashboard = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (ProviderDashboard.__proto__ || Object.getPrototypeOf(ProviderDashboard)).call(this, props));
 
-        _this.handleLogin = function () {
-            if (_app.authService.providerLogin(_this.state.login, _this.state.password)) {
-                (0, _jquery2.default)(document).trigger("changeState", [true]);
-            };
-        };
-
         _this.generateCode = function (e) {
-            console.log('generating code');
             _this.setState({
-                component: _react2.default.createElement(_generatedCode2.default, null)
+                component: _react2.default.createElement(_codeGenerator2.default, { token: 'leleleleleel' })
             });
             e.preventDefault();
         };
@@ -44780,20 +45083,6 @@ var ProviderDashboard = function (_Component) {
     }
 
     _createClass(ProviderDashboard, [{
-        key: 'handleLoginChange',
-        value: function handleLoginChange(e) {
-            this.setState({
-                login: e.target.value
-            });
-        }
-    }, {
-        key: 'handlePasswordChange',
-        value: function handlePasswordChange(e) {
-            this.setState({
-                password: e.target.value
-            });
-        }
-    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -44809,7 +45098,7 @@ var ProviderDashboard = function (_Component) {
 
 exports.default = ProviderDashboard;
 
-},{"../../app":281,"./generatedCode":291,"./providerDashboardTiles":293,"jquery":57,"react":278}],293:[function(require,module,exports){
+},{"../../app":281,"./codeGenerator":292,"./providerDashboardTiles":294,"jquery":57,"react":278}],294:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -44861,136 +45150,7 @@ var ProviderDashboardTiles = function ProviderDashboardTiles(props) {
 
 exports.default = ProviderDashboardTiles;
 
-},{"react":278}],294:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _app = require('../../app');
-
-var _jquery = require('jquery');
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _providerDashboard = require('./providerDashboard');
-
-var _providerDashboard2 = _interopRequireDefault(_providerDashboard);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ProviderPanel = function (_Component) {
-    _inherits(ProviderPanel, _Component);
-
-    function ProviderPanel(props) {
-        _classCallCheck(this, ProviderPanel);
-
-        var _this = _possibleConstructorReturn(this, (ProviderPanel.__proto__ || Object.getPrototypeOf(ProviderPanel)).call(this, props));
-
-        _this.handleLogin = function () {
-            if (_app.authService.providerLogin(_this.state.login, _this.state.password)) {
-                (0, _jquery2.default)(document).trigger("changeState", [true]);
-            };
-        };
-
-        _this.handleEvent = function (event, state) {
-            _this.setState({
-                signed: state
-            });
-        };
-
-        _this.state = {
-            login: '',
-            password: '',
-            signed: _app.authService.isSignedIn()
-        };
-        return _this;
-    }
-
-    _createClass(ProviderPanel, [{
-        key: 'handleLoginChange',
-        value: function handleLoginChange(e) {
-            this.setState({
-                login: e.target.value
-            });
-        }
-    }, {
-        key: 'handlePasswordChange',
-        value: function handlePasswordChange(e) {
-            this.setState({
-                password: e.target.value
-            });
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            (0, _jquery2.default)(document).on('changeState', this.handleEvent);
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            (0, _jquery2.default)(document).off('changeState', this.handleEvent);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var isSigned = this.state.signed;
-            return _react2.default.createElement(
-                'div',
-                { className: 'col-md-6 col-md-offset-3 main-content' },
-                !isSigned ? _react2.default.createElement(
-                    'div',
-                    { className: 'row' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'form-group main-box login-box' },
-                        _react2.default.createElement('input', { type: 'email',
-                            onChange: function onChange(e) {
-                                return _this2.handleLoginChange(e);
-                            },
-                            className: 'form-control main-field', placeholder: 'Email...',
-                            value: this.state.login
-                        }),
-                        _react2.default.createElement('input', { type: 'password',
-                            onChange: function onChange(e) {
-                                return _this2.handlePasswordChange(e);
-                            },
-                            className: 'form-control main-field', placeholder: 'Has\u0142o...',
-                            value: this.state.password
-                        }),
-                        _react2.default.createElement(
-                            'button',
-                            { onClick: this.handleLogin,
-                                className: 'btn btn-lg btn-primary' },
-                            'Zaloguj si\u0119'
-                        )
-                    )
-                ) : _react2.default.createElement(_providerDashboard2.default, null)
-            );
-        }
-    }]);
-
-    return ProviderPanel;
-}(_react.Component);
-
-exports.default = ProviderPanel;
-
-},{"../../app":281,"./providerDashboard":292,"jquery":57,"react":278}],295:[function(require,module,exports){
+},{"react":278}],295:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45008,18 +45168,20 @@ var _stars2 = _interopRequireDefault(_stars);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Review = function Review(props) {
+    console.log('review', props);
+
     var config = [{
         id: 1,
         title: "Jakość usługi",
-        value: props.ratings.serviceQuality
+        value: props.productRate
     }, {
         id: 2,
         title: "Jakość obsługi",
-        value: props.ratings.satisfaction
+        value: props.serviceRate
     }, {
         id: 3,
         title: "Stosunek jakość/cena",
-        value: props.ratings.ratio
+        value: props.ratioRate
     }];
 
     return _react2.default.createElement(
@@ -45062,12 +45224,25 @@ var _review2 = _interopRequireDefault(_review);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Reviews = function Reviews(props) {
-    var reviews = props.reviews.map(function (item) {
-        return _react2.default.createElement(_review2.default, { key: item.id, type: 'review', comment: item.comment, ratings: item.ratings });
-    });
+    console.log('props', props);
+    var reviews = '';
+    if (props.reviews) {
+        reviews = props.reviews.map(function (item) {
+            return _react2.default.createElement(_review2.default, { key: item.id, type: 'review', comment: item.comment,
+                serviceRate: item.serviceRate,
+                productRate: item.productRate,
+                ratioRate: item.ratioRate });
+        });
+    }
+
     return _react2.default.createElement(
         'section',
         { className: 'reviews' },
+        _react2.default.createElement(
+            'h3',
+            null,
+            'Opinie klient\xF3w'
+        ),
         reviews
     );
 };
@@ -45210,6 +45385,8 @@ var _searchResult = require('./searchResult');
 
 var _searchResult2 = _interopRequireDefault(_searchResult);
 
+var _app = require('../app');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45218,18 +45395,46 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var results = [{
-    id: 1,
-    title: 'Warsztat "U Ani"',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lectus massa, molestie et orci eu, porta pretium lectus. Vivamus elementum ut metus lobortis gravida.'
+var records = [{
+    clientID: 101,
+    name: "Sławex",
+    email: "slawex@slawex.pl",
+    description: "Kompleksowe usługi w dziedzinie hydrualiki"
 }, {
-    id: 2,
-    title: 'Janusz ProCars Inc.',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lectus massa, molestie et orci eu, porta pretium lectus. Vivamus elementum ut metus lobortis gravida.'
+    clientID: 102,
+    name: "Korpopol",
+    email: "admin@korpopol.pl",
+    description: "Administracja systemami IT"
 }, {
-    id: 3,
-    title: 'EloAuto',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lectus massa, molestie et orci eu, porta pretium lectus. Vivamus elementum ut metus lobortis gravida.'
+    clientID: 103,
+    name: "BrzePower",
+    email: "brze@brzepower.eu",
+    description: "Energia odnawialna w twoim domu!"
+}, {
+    clientID: 104,
+    name: "DomDom",
+    email: "dom@dom.pl",
+    description: "Agencja nieruchomości"
+}, {
+    clientID: 105,
+    name: "Jedzonko.pl",
+    email: "kontakt@jedzonko.pl",
+    description: "Catering dla firm"
+}, {
+    clientID: 106,
+    name: "Singleton",
+    email: "napisz@singleton.pl",
+    description: "Najlepszy outsourcing IT w Małopolsce"
+}, {
+    clientID: 107,
+    name: "SzybkaRandka",
+    email: "szybka@randka.pl",
+    description: "Łączymy ludzi!"
+}, {
+    clientID: 108,
+    name: "Mordor",
+    email: "ork@mordor.pl",
+    description: "Najlepsze gry planszowe i powieści fantasy"
 }];
 
 var SearchResults = function (_Component) {
@@ -45238,44 +45443,60 @@ var SearchResults = function (_Component) {
     function SearchResults(props) {
         _classCallCheck(this, SearchResults);
 
-        return _possibleConstructorReturn(this, (SearchResults.__proto__ || Object.getPrototypeOf(SearchResults)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (SearchResults.__proto__ || Object.getPrototypeOf(SearchResults)).call(this, props));
+
+        _this.state = {
+            results: null,
+            ready: false
+        };
+        return _this;
     }
 
     _createClass(SearchResults, [{
-        key: 'handleChange',
-        value: function handleChange(e) {
-            this.setState({
-                searchTerm: e.target.value
-            });
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            if (_app.restService.use()) {
+                _app.restService.getServices(this.props.routeParams.term).then(function (response) {
+                    console.log(response.data);
+                    _this2.setState({
+                        results: response.data,
+                        ready: true
+                    });
+                });
+            } else {
+                var filtered = records.filter(function (r) {
+                    return r.name.toLowerCase().includes(_this2.props.routeParams.term.toLowerCase());
+                });
+                this.setState({
+                    results: filtered,
+                    ready: true
+                });
+            }
         }
-
-        /* shuffle(a) {
-             let b = [];
-             for (let i = a.length; i; i--) {
-                 let j = Math.floor(Math.random() * i);
-                 [b[i - 1], b[j]] = [a[j], a[i - 1]];
-             }
-             return b;
-         }*/
-
     }, {
         key: 'render',
         value: function render() {
-            /*   const shuffled = this.shuffle(results);
-               console.log(shuffled);*/
-            var renderedResults = results.map(function (r) {
-                return _react2.default.createElement(_searchResult2.default, { key: r.id, id: r.id, title: r.title, description: r.description });
+            var ready = this.state.ready;
+            var renderedResults = '';
+            if (true === ready) renderedResults = this.state.results.map(function (r) {
+                return _react2.default.createElement(_searchResult2.default, { key: r.clientID, id: r.clientID, title: r.name, description: r.description });
             });
 
             return _react2.default.createElement(
-                'div',
-                null,
+                'main',
+                { className: 'container' },
                 _react2.default.createElement(
-                    'h2',
-                    { className: 'page-title' },
-                    'Wyniki wyszukiwania'
-                ),
-                renderedResults
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'h2',
+                        { className: 'page-title' },
+                        'Wyniki wyszukiwania'
+                    ),
+                    renderedResults
+                )
             );
         }
     }]);
@@ -45286,12 +45507,14 @@ var SearchResults = function (_Component) {
 exports.default = SearchResults;
 ;
 
-},{"./searchResult":298,"react":278}],300:[function(require,module,exports){
+},{"../app":281,"./searchResult":298,"react":278}],300:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
 
@@ -45305,90 +45528,110 @@ var _reviews = require('./reviews');
 
 var _reviews2 = _interopRequireDefault(_reviews);
 
+var _app = require('../app');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var service = {
-  title: 'Warsztat u Ani',
-  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean velit urna, condimentum ut cursus sed, aliquam at tellus. Nulla consequat lectus ut neque condimentum eleifend. Mauris tincidunt augue ac nulla aliquam, ut tincidunt est suscipit. Donec enim turpis, dapibus vitae viverra a, pharetra eget ligula.',
-  serviceQuality: 4.4,
-  satisfaction: 4.2,
-  ratio: 5,
-  reviews: [{
-    id: 1,
-    ratings: {
-      serviceQuality: 4,
-      satisfaction: 4,
-      ratio: 5
-    },
-    comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-  }, {
-    id: 2,
-    ratings: {
-      serviceQuality: 1,
-      satisfaction: 1,
-      ratio: 2
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Service = function (_Component) {
+  _inherits(Service, _Component);
+
+  function Service(props) {
+    _classCallCheck(this, Service);
+
+    var _this = _possibleConstructorReturn(this, (Service.__proto__ || Object.getPrototypeOf(Service)).call(this, props));
+
+    _this.state = {
+      loading: true,
+      service: null,
+      starsConfig: null
+    };
+    return _this;
+  }
+
+  _createClass(Service, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _app.restService.getService(this.props.routeParams.id).then(function (response) {
+        console.log('data', response.data);
+        _this2.setState({
+          loading: false,
+          service: response.data,
+          starsConfig: [{
+            id: 1,
+            title: "Jakość usługi",
+            value: response.data.averageProductRate
+          }, {
+            id: 2,
+            title: "Jakość obsługi",
+            value: response.data.averageServiceRate
+          }, {
+            id: 3,
+            title: "Stosunek jakość/cena",
+            value: response.data.averageRatioRate
+          }]
+        });
+      });
+      console.log('state', this.state);
     }
   }, {
-    id: 3,
-    ratings: {
-      serviceQuality: 3,
-      satisfaction: 3,
-      ratio: 4
-    },
-    comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-  }]
+    key: 'render',
+    value: function render() {
+      var ready = this.state.loading;
+      return _react2.default.createElement(
+        'main',
+        { className: 'container' },
+        ready ? _react2.default.createElement(
+          'h1',
+          null,
+          'Trwa \u0142adowanie zawarto\u015Bci...'
+        ) : _react2.default.createElement(
+          'div',
+          { className: 'row' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-12' },
+            _react2.default.createElement(
+              'h2',
+              null,
+              this.state.service.name
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-6 service-description' },
+            this.state.service.description
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-6' },
+            _react2.default.createElement(_stars2.default, { type: 'overview', config: this.state.starsConfig })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-xs-12' },
+            _react2.default.createElement('hr', null),
+            _react2.default.createElement(_reviews2.default, { reviews: this.state.service.votes })
+          )
+        )
+      );
+    }
+  }]);
 
-};
-var Service = function Service() {
-  var starsConfig = [{
-    id: 1,
-    title: "Jakość usługi",
-    value: service.serviceQuality
-  }, {
-    id: 2,
-    title: "Jakość obsługi",
-    value: service.satisfaction
-  }, {
-    id: 3,
-    title: "Stosunek jakość/cena",
-    value: service.ratio
-  }];
-
-  console.log();
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'div',
-      { className: 'col-md-12' },
-      _react2.default.createElement(
-        'h2',
-        null,
-        service.title
-      )
-    ),
-    _react2.default.createElement(
-      'div',
-      { className: 'col-md-6 service-description' },
-      service.description
-    ),
-    _react2.default.createElement(
-      'div',
-      { className: 'col-md-6' },
-      _react2.default.createElement(_stars2.default, { type: 'overview', config: starsConfig })
-    ),
-    _react2.default.createElement(
-      'div',
-      { className: 'col-xs-12' },
-      _react2.default.createElement('hr', null),
-      _react2.default.createElement(_reviews2.default, { reviews: service.reviews })
-    )
-  );
-};
+  return Service;
+}(_react.Component);
 
 exports.default = Service;
+;
 
-},{"./reviews":296,"./stars":302,"react":278}],301:[function(require,module,exports){
+},{"../app":281,"./reviews":296,"./stars":302,"react":278}],301:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45434,14 +45677,18 @@ var _progressItem2 = _interopRequireDefault(_progressItem);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Stars = function Stars(props) {
+
     var stars = null;
-    if ("overview" === props.type) stars = props.config.map(function (item) {
-        return _react2.default.createElement(_progressItem2.default, { key: item.id, title: item.title, value: item.value });
-    });else if ("review" === props.type) stars = props.config.map(function (item) {
+    if ("overview" === props.type) {
+        stars = props.config.map(function (item) {
+            return _react2.default.createElement(_progressItem2.default, { key: item.id, title: item.title, value: item.value });
+        });
+        console.log('stars', props);
+    } else if ("review" === props.type) stars = props.config.map(function (item) {
         return _react2.default.createElement(
             'div',
-            { className: 'col-md-4' },
-            _react2.default.createElement(_starsItem2.default, { key: item.id, title: item.title, value: item.value })
+            { key: item.id, className: 'col-md-4' },
+            _react2.default.createElement(_starsItem2.default, { title: item.title, value: item.value })
         );
     });
     return _react2.default.createElement(
@@ -45453,7 +45700,7 @@ var Stars = function Stars(props) {
 
 exports.default = Stars;
 
-},{"./progressItem":290,"./starsItem":303,"react":278}],303:[function(require,module,exports){
+},{"./progressItem":291,"./starsItem":303,"react":278}],303:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45536,13 +45783,25 @@ var AuthService = function () {
     }
 
     _createClass(AuthService, [{
-        key: 'providerLogin',
-        value: function providerLogin(email, password) {
-            if (email === 'provider@email.com' && password === 'provider') {
-                localStorage.setItem('token', 123456);
-                return true;
+        key: 'login',
+        value: function login(email, password) {
+            var ok = false;
+            if (email === 'ork@mordor.pl' && password === 'aaa') {
+                localStorage.setItem('role', 'ROLE_SERVICE');
+                localStorage.setItem('id', 108);
+                ok = true;
+            } else if (email === 'orel.jan@gmail.com' && password === 'aaa') {
+                localStorage.setItem('role', 'ROLE_CLIENT');
+                localStorage.setItem('id', 4);
+                ok = true;
             }
-            return false;
+
+            if (ok) {
+                localStorage.setItem('token', 123456);
+                localStorage.setItem('email', email);
+            }
+
+            return ok;
         }
     }, {
         key: 'logout',
@@ -45557,6 +45816,21 @@ var AuthService = function () {
             var token = localStorage.getItem('token');
             console.log(token ? true : false);
             return token ? true : false;
+        }
+    }, {
+        key: 'getRole',
+        value: function getRole() {
+            return localStorage.getItem('role');
+        }
+    }, {
+        key: 'getEmail',
+        value: function getEmail() {
+            return localStorage.getItem('email');
+        }
+    }, {
+        key: 'getId',
+        value: function getId() {
+            return localStorage.getItem('id');
         }
     }]);
 
@@ -45585,12 +45859,32 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var RestService = function () {
     function RestService() {
         _classCallCheck(this, RestService);
+
+        this.backendURL = "http://localhost:5000/api";
     }
 
     _createClass(RestService, [{
-        key: 'get',
-        value: function get(entity) {
-            return _axios2.default.get('/' + entity);
+        key: 'getService',
+        value: function getService(id) {
+            return _axios2.default.get(this.backendURL + '/service/' + id);
+        }
+    }, {
+        key: 'getServices',
+        value: function getServices(name) {
+            return _axios2.default.get(this.backendURL + '/search/' + name);
+        }
+    }, {
+        key: 'generateCode',
+        value: function generateCode(name, id) {
+            return _axios2.default.post(this.backendURL + '/code/', {
+                'clientID': id,
+                'userName': name
+            });
+        }
+    }, {
+        key: 'use',
+        value: function use() {
+            return true;
         }
     }]);
 

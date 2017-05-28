@@ -233,8 +233,8 @@ th {
 
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url("../fonts/glyphicons-halflings-regular.eot");
-  src: url("../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
+  src: url("fonts/glyphicons-halflings-regular.eot");
+  src: url("fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("fonts/glyphicons-halflings-regular.woff") format("woff"), url("fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
 }
 
 .glyphicon {
@@ -6682,7 +6682,7 @@ button.close {
 }
 
 #content {
-  min-height: 100vh;
+  position: relative;
   width: 100%;
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#160404+0,17182b+100 */
   background: #160404;
@@ -6694,7 +6694,8 @@ button.close {
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#160404', endColorstr='#17182b',GradientType=0 );
   /* IE6-9 */
-  padding-bottom: 50px;
+  padding-bottom: 150px;
+  min-height: 100vh;
 }
 
 .main-content {
@@ -6782,8 +6783,8 @@ footer .heart {
 }
 
 .main-box .main-field {
-  font-size: 2rem;
-  height: 6rem;
+  font-size: 1.3rem;
+  height: 4rem;
   margin-bottom: 20px;
 }
 
@@ -6813,6 +6814,7 @@ input:focus {
 }
 
 .stars .star {
+  font-size: 2rem;
   color: #ddd872;
   padding: 5px;
 }
@@ -6846,6 +6848,20 @@ input:focus {
   margin-bottom: 20px;
 }
 
+.progress .progress-bar-value {
+  background: rgba(34, 34, 34, 0.2);
+  position: absolute;
+  text-align: center;
+  font-size: 1.5rem;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  font-weight: 700;
+  padding: 0 10px;
+  height: 25px;
+  width: 50px;
+}
+
 .reviews .review {
   padding: 20px 0;
   border-bottom: 2px solid #333333;
@@ -6858,6 +6874,10 @@ input:focus {
 .service-title {
   color: #f5a940;
   padding: 0 5px;
+}
+
+.service-description {
+  margin-bottom: 20px;
 }
 
 .tile {
@@ -6893,6 +6913,18 @@ input:focus {
 .QRCode canvas {
   max-width: 100%;
   height: auto !important;
+}
+
+.client-summary {
+  text-align: center;
+}
+
+.client-summary .points-count {
+  margin-bottom: 20px;
+  font-size: 6rem;
+  color: #f5a940;
+  text-align: center;
+  display: block;
 }
 
 @media (min-width: 768px) {
@@ -7424,8 +7456,22 @@ input:focus {
     width: 300px;
   }
 
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 100%;
+  }
+
   .main-content {
-    margin-top: 30vh;
+    margin-top: 0;
+  }
+
+  .main-box .main-field {
+    font-size: 2rem;
+    height: 6rem;
   }
 }
 
