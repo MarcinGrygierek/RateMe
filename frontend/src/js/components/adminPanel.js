@@ -81,7 +81,7 @@ export default class AdminPanel extends Component {
                         {isSigned ? (this.state.component)
                             :
                             (
-                                < div className="row" >
+                                < div >
 
                                     <div className="form-group main-box login-box">
                                         <input type="email"
