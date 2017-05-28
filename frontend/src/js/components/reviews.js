@@ -13,6 +13,7 @@ const Reviews = (props) => {
 
     return (
         <section className="reviews">
+            <h3>Opinie klientów</h3>
             {reviews}
         </section>
     );
