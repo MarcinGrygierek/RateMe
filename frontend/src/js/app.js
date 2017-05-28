@@ -25,8 +25,8 @@ import AddReview from './components/addReview/addReview';
 export const restService = new RestService();
 export const authService = new AuthService();
 
-const navigate = () => {
-    hashHistory.push('/search');
+const navigate = (term) => {
+    hashHistory.push('/search/' + term);
 }
 
 
@@ -76,7 +76,7 @@ ReactDOM.render(
 
         <Route path="/" component={RateMeApp} >
             <IndexRoute component={MainWrapper} />
-            <Route path="search" component={SearchResults} />
+            <Route path="search/:term" component={SearchResults} />
             <Route path="services/:id" component={Service} />
             <Route path="providerPanel" component={AdminPanel}>
                 <IndexRoute component={AdminPanel} />
