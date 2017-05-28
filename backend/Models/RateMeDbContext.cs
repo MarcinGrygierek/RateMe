@@ -49,11 +49,13 @@ namespace Rate.ME.Models
 
                 entity.HasOne(d => d.Token)
                     .WithMany(p => p.Points)
-                    .HasForeignKey(d => d.TokenId);
+                    .HasForeignKey(d => d.TokenId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Points)
-                    .HasForeignKey(d => d.UserId);
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Token>(entity =>

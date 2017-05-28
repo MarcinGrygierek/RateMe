@@ -29,17 +29,26 @@ namespace Rate.ME.Controllers
     {
         IVoteRepository _repository;
         ITokenRepository _tokenRepository;
-        public VoteController(IVoteRepository repository, ITokenRepository tokenRepository)
+        IPointsRepository _pointsRepository;
+        public VoteController(IVoteRepository repository, ITokenRepository tokenRepository,
+        IPointsRepository pointsRepository)
         {
             _repository = repository;
             _tokenRepository = tokenRepository;
+            _pointsRepository = pointsRepository;
+        }
+
+        private long CountPoints(DateTime time)
+        {
+            var timeDiffrence = Math.Abs(time.Subtract(DateTime.Now).TotalHours);
+            return timeDiffrence > 0.0 ? Convert.ToInt64(timeDiffrence) : 0;
         }
 
         [HttpPost]
         public IActionResult Vote([FromBody] VoteRequestData data)
         {
             var token = _tokenRepository.GetToken(x => BitConverter.ToString(x.TokenData).Replace("-", "") == data.Token);
-            
+
             if(token == null) return CreatedAtRoute(data, new { Status = "Error"});
 
             if(token.ClientId == data.ClientID)
@@ -57,6 +66,12 @@ namespace Rate.ME.Controllers
                     vote.ServiceRate = data.ServiceQuality;
                     vote.Comment = data.Comment;
                     _repository.AddVote(vote);
+
+                    Points points = new Points();
+                    points.TokenId = token.Id;
+                    points.UserId = data.UserID;
+                    points.NumberOfPoints = CountPoints(Convert.ToDateTime(token.ExpirationDate));
+                    _pointsRepository.AddPoints(points);
                 }
             }
             else
@@ -64,7 +79,7 @@ namespace Rate.ME.Controllers
                 return CreatedAtRoute(data, new { Status = "Invalid ClientID"});
             }
 
-            return CreatedAtRoute(data, new { StatusCode = "Ok"});
+            return CreatedAtRoute(data, new { Status = "Ok"});
         }
     }
 }

@@ -22,15 +22,23 @@ namespace Rate.ME.Controllers
         public string Status { get; set;}
     }
 
+    public class ExtendedSuccesfullResponse : LoginSuccesfullResponse
+    {
+        public long TotalPoints {get;set;}
+    }
+
     public class LoginUserController : Controller
     {
         private IUserRepository _repository;
         private IBusinessClientRepository _businessRepository;
+        private IPointsRepository _pointsRepository;
         public LoginUserController(IUserRepository repository,
-        IBusinessClientRepository businessRepository)
+        IBusinessClientRepository businessRepository,
+        IPointsRepository pointsRepository)
         {
             _businessRepository = businessRepository;
             _repository = repository;
+            _pointsRepository = pointsRepository;
         }
 
         [Route("api/login")]
@@ -52,10 +60,21 @@ namespace Rate.ME.Controllers
             {
                 if(user.Password == loginAttempt.Password)
                 {
-                    LoginSuccesfullResponse response = new LoginSuccesfullResponse();
+                    ExtendedSuccesfullResponse response = new ExtendedSuccesfullResponse();
                     response.UserID = user.Id;
                     response.Token = DateTime.Now.Ticks;
                     response.Status = "Ok";
+                    //response.TotalPoints = 
+
+                    try
+                    {
+                        var points = _pointsRepository.GetAllPoints(x => x.UserId == user.Id).Sum(x => x.NumberOfPoints);
+                        response.TotalPoints = points;
+                    }
+                    catch
+                    {
+
+                    }
 
                     return CreatedAtRoute(new { gettedId = loginAttempt.Name }, response);
                 }
