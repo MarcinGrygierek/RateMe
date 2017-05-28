@@ -3,10 +3,12 @@ export default class AuthService {
         let ok = false;
         if (email === 'p' && password === 'p') {
             localStorage.setItem('role', 'ROLE_SERVICE');
+            localStorage.setItem('id', 14);
             ok = true;
         }
         else if (email === 'c' && password === 'c') {
             localStorage.setItem('role', 'ROLE_CLIENT');
+            localStorage.setItem('id', 2);
             ok = true;
         }
 
@@ -36,5 +38,9 @@ export default class AuthService {
 
     getEmail() {
         return localStorage.getItem('email');
+    }
+
+    getId() {
+        return localStorage.getItem('id');
     }
 }
