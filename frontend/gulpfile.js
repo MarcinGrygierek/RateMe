@@ -37,7 +37,7 @@ gulp.task('sass', () => {
 gulp.task('minify-css', ['sass'], () => {
     return gulp.src('dist/style.css')
         .pipe(cleanCSS())
-        .pipe(gulp.dest())
+        .pipe(gulp.dest('dist'))
 });
 
 gulp.task('icons', () => {
@@ -58,6 +58,12 @@ gulp.task('bundle', () => {
   .pipe(fs.createWriteStream("dist/bundle.js"));
 })
 
+gulp.task('bundle-min', ['bundle'], () => {
+     return gulp.src('dist/bundle.js')
+        .pipe(uglify())
+        .pipe(gulp.dest('dist'))
+})
+
 gulp.task('copy-images', () => {
     gulp.src('assets/images/*')
         .pipe(gulp.dest('dist/images'))
@@ -69,4 +75,4 @@ gulp.task('watch', ['bundle', 'sass'], () => {
 })
 
 gulp.task('default', ['icons', 'sass', 'copy-images', 'bundle', 'watch']);
-gulp.task('production', ['sass', 'bundle', 'minify-css']);
+gulp.task('production', ['sass', 'bundle-min', 'minify-css']);

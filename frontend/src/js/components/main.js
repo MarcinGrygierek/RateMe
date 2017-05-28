@@ -37,7 +37,7 @@ export default class Main extends Component {
     }
 
     handleSearch = (term) => {
-        this.props.navigate();
+        this.props.navigate(term);
     }
 
     render() {

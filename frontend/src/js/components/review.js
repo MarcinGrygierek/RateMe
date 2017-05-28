@@ -2,22 +2,23 @@ import React from 'react';
 import Stars from './stars';
 
 const Review = (props) => {
-    const config = [{
+    console.log('review', props);
+
+    let config = [{
         id: 1,
         title: "Jakość usługi",
-        value: props.ratings.serviceQuality
+        value: props.productRate
     },
     {
         id: 2,
         title: "Jakość obsługi",
-        value: props.ratings.satisfaction
+        value: props.serviceRate
     },
     {
         id: 3,
         title: "Stosunek jakość/cena",
-        value: props.ratings.ratio
+        value: props.ratioRate
     }];
-
 
     return (
         <section className="review">
@@ -30,7 +31,7 @@ const Review = (props) => {
                         {props.comment}
                     </div>
                 </div>
-            : ''}
+                : ''}
         </section>
     );
 };
