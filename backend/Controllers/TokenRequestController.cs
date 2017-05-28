@@ -22,8 +22,15 @@ namespace Rate.ME.Controllers
         public string Status {get; set;}
     }
 
+    public class ClientInfoResponse
+    {
+        public long ID {get; set;}
+        public string Description {get; set;}
+        public string Name {get; set;}
+        public string Status {get; set;}
+    }
+
     [EnableCors("MyPolicy")]
-    [Route("api/code")]
     public class TokenRequestController : Controller
     {
         private readonly ITokenRepository _repository;
@@ -39,6 +46,28 @@ namespace Rate.ME.Controllers
             _userRepository = userRepository;
         }
 
+        [HttpGet("api/info/{token}")]
+        public IActionResult GetInfo(string token)
+        {
+            ClientInfoResponse response = new ClientInfoResponse();
+            response.Status = "Error";
+            var realToken = _repository.GetToken(x => BitConverter.ToString(x.TokenData).Replace("-", "") == token);
+
+            if(realToken == null) return CreatedAtRoute(new { status = "Error"}, response);
+
+            var client = _businessRepository.GetBusinessClient(x => realToken.ClientId == x.Id);
+
+            if(client == null) return CreatedAtRoute(new { status = "Error"}, response);
+
+            response.Status = "Ok";
+            response.Description = client.Description;
+            response.Name = client.Name;
+            response.ID = client.Id;
+
+            return CreatedAtRoute(new { status = "Ok"}, response);
+        }
+
+        [Route("api/code")]
         [HttpPost]
         public IActionResult GetHash([FromBody] HashRequestData data)
         {
