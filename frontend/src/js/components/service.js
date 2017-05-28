@@ -46,7 +46,7 @@ export default class Service extends Component {
       <main className="container">
 
         {
-          ready ? (<h1>elo</h1>)
+          ready ? (<h1>Trwa ładowanie zawartości...</h1>)
             :
             (
               <div className="row">
