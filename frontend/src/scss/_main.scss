@@ -8,10 +8,7 @@
     background: linear-gradient(to bottom, #160404 0%,#17182b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#160404', endColorstr='#17182b',GradientType=0 ); /* IE6-9 */
     padding-bottom: 150px;
-
-     @media (min-width: $screen-sm-min) {
-        min-height: 100vh;
-     }
+    min-height: 100vh;
 }
 
 .centered {
