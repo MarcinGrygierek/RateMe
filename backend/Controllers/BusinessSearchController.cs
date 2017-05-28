@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Rate.ME.Models;
 using Rate.ME.Repositories;
@@ -16,6 +17,7 @@ namespace Rate.ME.Controllers
         public string Description {get; set;}
     }
 
+    [EnableCors("MyPolicy")]
     [Route("api/search")]
     public class BusinessSearchController : Controller
     {

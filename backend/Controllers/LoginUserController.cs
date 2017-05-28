@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Rate.ME.Models;
 using Rate.ME.Repositories;
@@ -26,7 +27,7 @@ namespace Rate.ME.Controllers
     {
         public long TotalPoints {get;set;}
     }
-
+    [EnableCors("MyPolicy")]
     public class LoginUserController : Controller
     {
         private IUserRepository _repository;

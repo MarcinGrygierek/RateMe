@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Rate.ME.Models;
 using Rate.ME.Repositories;
@@ -74,6 +75,7 @@ namespace Rate.ME.Controllers
         public string Comment { get; set; }
     }
 
+    [EnableCors("MyPolicy")]
     [Route("api/service")]
     public class BusinessClientController : Controller
     {
